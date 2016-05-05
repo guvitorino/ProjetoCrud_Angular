@@ -28,6 +28,7 @@
 			$scope.adicionarUsuario = function (usuario) {
 				$scope.usuarios.push(angular.copy(usuario));
 				delete $scope.usuario;
+				$scope.cadaUsu.$setPristine();
 			};
 
 			$scope.apagarUsuario = function (usuario,usuarios) {
@@ -98,6 +99,7 @@
 						</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="txtnome" name="nome" ng-model="usuario.nome" ng-required="true">
+							<div style="color:#C42924;text-align: center;padding: 5px" ng-show="cadaUsu.nome.$error.required && cadaUsu.nome.$dirty" class="alert alert-danger">Preencha o campo Nome!!</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -107,6 +109,7 @@
 						</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="txtnomeempresa" name="empresa" ng-model="usuario.empresa" ng-required="true">
+							<div style="color:#C42924;text-align: center;padding: 5px" ng-show="cadaUsu.empresa.$error.required && cadaUsu.empresa.$dirty" class="alert alert-danger">Preencha o campo Nome Empresa!!</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -116,6 +119,7 @@
 						</label>
 						<div class="col-sm-10">
 							<input type="email" class="form-control" id="txtemail" name="email" ng-model="usuario.email" ng-required="true">
+							<div style="color:#C42924;text-align: center;padding: 5px;" ng-show="cadaUsu.email.$error.required && cadaUsu.email.$dirty" class="alert alert-danger">Preencha o campo Email!!</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -124,8 +128,9 @@
 							Senha
 						</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" id="txtsenha" name="senha" ng-model="usuario.senha" ng-required="true"><br>
-							<span style="color:#C42924; display:none;" class="msgerrosenha">A senha deve ter no mínimo 6 caracteres</span>
+							<input type="password" class="form-control" id="txtsenha" name="senha" ng-model="usuario.senha" ng-required="true" ng-minlength="10"><br>
+							<div style="color:#C42924;text-align: center;padding: 5px;" ng-show="cadaUsu.senha.$error.required && cadaUsu.senha.$dirty" class="alert alert-danger">Preencha o campo Senha!!</div>
+							<div style="color:#C42924;text-align: center;padding: 5px;;" ng-show="cadaUsu.senha.$error.minlength" class="alert alert-danger">A Senha deve ter no minimo 6 caracteres!!</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -135,7 +140,7 @@
 								<label>
 									<input type="checkbox" id="chtermo" ng-model="usuario.termos" ng-required="true"/> <b>Li e Concordo com os <a href="#" style="text-decoration:none; color:green;">Termos e Condições de Uso</a>!
 								</label>
-								<span style="color:#C42924; display:none;" class="msgtermo">Aceite o termo de uso!</span>
+								<div style="color:#C42924;text-align: center;padding: 5px;" ng-if="!usuario.termos" class="alert alert-danger">Aceite os termos de uso!!</div>
 							</div>
 						</div>
 					</div>
@@ -143,14 +148,13 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							 
-							<button type="submit" class="btn btn-default" id="btncadastra" ng-click="adicionarUsuario(usuario)">
+							<button type="submit" class="btn btn-default" id="btncadastra" ng-click="adicionarUsuario(usuario)" ng-disabled="cadaUsu.$invalid">
 								Cadastrar
 							</button>
 							
 						</div>
 					</div>
 				</form>
-				<span style="color:#C42924" ng-show="cadaUsu.nome.$error.required " class="alert alert-danger">Preencha todos os campos corretamente</span>
 			</div>
 			<div class="col-md-3">
 				<table class="table table-bordered table-condesed" id="tabela">
