@@ -1,0 +1,22 @@
+body{
+	background-color: #1C9CCC;
+}
+
+#font-menu{
+	color: #ecf0f1;
+}
+
+#font-menu:hover{
+	background-color: #307CFF;
+	font-size: 20px;
+}
+
+.footer {
+    color:#ecf0f1;
+}
+
+.footer a:link{
+	text-decoration: none;
+	margin: auto;
+	color:#ecf0f1;
+}
