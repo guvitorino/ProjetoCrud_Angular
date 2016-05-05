@@ -9,7 +9,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+    <script src="js/jquery.min.js"></script>
     <style type="text/css">
     .erro{
     	border: #C42924 solid 1px;
@@ -20,11 +20,18 @@
     <script src="js/angular.js"></script>
     <script type="text/javascript">
     	angular.module("thebestoferta", []);
-    	angular.module("thebestoferta").controller("thebestofertaCTRL", function ($scope) {
+    	angular.module("thebestoferta").controller("thebestofertaCTRL", function ($scope,$http) {
 			$scope.app = "thebestoferta";
-			$scope.usuarios = [
-				{nome: "Gustavo", email: "gu_vitorino@hotmail.com"}
-			];
+			$scope.usuarios = [];
+
+			var carregarLista = function () {
+				$http.get("pegarAnunciantes.php").success(function (data) {
+					$scope.usuarios = data;
+				}).error(function (data) {
+					$scope.message = "Aconteceu um problema: " + data;
+				});
+			};
+
 			$scope.adicionarUsuario = function (usuario) {
 				$scope.usuarios.push(angular.copy(usuario));
 				delete $scope.usuario;
@@ -37,6 +44,8 @@
 					usuarios.splice(index,1);
 				$scope.usuarios = usuarios;
 			};
+
+			carregarLista();
 		});
     </script>
   </head>
@@ -157,6 +166,7 @@
 				</form>
 			</div>
 			<div class="col-md-3">
+				<div><span>{{$scope.message}}</span></div>
 				<table class="table table-bordered table-condesed" id="tabela">
 					<thead>
 						<tr>
