@@ -10,15 +10,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
-    <style type="text/css">
-    .erro{
-    	border: #C42924 solid 1px;
-    }
-
-
-    </style>
     <script src="js/angular.js"></script>
     <script type="text/javascript">
+
     	angular.module("thebestoferta", []);
     	angular.module("thebestoferta").controller("thebestofertaCTRL", function ($scope,$http) {
 			$scope.app = "thebestoferta";
@@ -33,9 +27,14 @@
 			};
 
 			$scope.adicionarUsuario = function (usuario) {
-				$scope.usuarios.push(angular.copy(usuario));
-				delete $scope.usuario;
-				$scope.cadaUsu.$setPristine();
+				 $http.post("inserirAnunciante.php", {nome:usuario.nome, empresa: usuario.empresa, email: usuario.email, senha: usuario.senha})
+				 .success(function (data) {
+					delete $scope.usuario;
+					$scope.cadaUsu.$setPristine();
+					carregarLista();
+				}).error(function (data) {
+					$scope.message = "Aconteceu um problema: " + data;
+				});
 			};
 
 			$scope.apagarUsuario = function (usuario,usuarios) {
@@ -98,7 +97,7 @@
 			</div>
 			<div class="col-md-8" style="padding: 20px;">
 				<h3 class="text-center">
-					Anunciar {{$invalid}}
+					Anunciar
 				</h3>
 				<form class="form-horizontal" role="form" id="cadastro" method="post" name="cadaUsu">
 					<div class="form-group">
