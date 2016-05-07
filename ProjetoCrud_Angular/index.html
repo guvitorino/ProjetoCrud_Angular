@@ -1,91 +1,94 @@
-<html ng-app="listaTelefonica">
-<head>
-	<title>Lista Telefonica</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<style>
-		.jumbotron {
-			width: 400px;
-			text-align: center;
-			margin-top: 20px;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		.table {
-			margin-top: 20px;
-		}
-		.form-control {
-			margin-bottom: 5px;
-		}
-		.selecionado {
-			background-color: yellow;
-		}
-		.negrito {
-			font-weight: bold;
-		}
-	</style>
-	<script src="angular.js"></script>
-	<script>
-		angular.module("listaTelefonica", []);
-		angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
-			$scope.app = "Lista Telefonica";
-			$scope.contatos = [
-				{nome: "Pedro", telefone: "99998888", cor: "blue"},
-				{nome: "Ana", telefone: "99998877", cor: "yellow"},
-				{nome: "Maria", telefone: "99998866", cor: "red"}
-			];
-			$scope.operadoras = [
-				{nome: "Oi", codigo: 14, categoria: "Celular"},
-				{nome: "Vivo", codigo: 15, categoria: "Celular"},
-				{nome: "Tim", codigo: 41, categoria: "Celular"},
-				{nome: "GVT", codigo: 25, categoria: "Fixo"},
-				{nome: "Embratel", codigo: 21, categoria: "Fixo"}
-			];
-			$scope.adicionarContato = function (contato) {
-				$scope.contatos.push(angular.copy(contato));
-				delete $scope.contato;
-			};
-			$scope.apagarContatos = function (contatos) {
-				$scope.contatos = contatos.filter(function (contato) {
-					if (!contato.selecionado) return contato;
-				});
-			};
-			$scope.isContatoSelecionado = function (contatos) {
-				return contatos.some(function (contato) {
-					return contato.selecionado;
-				});
-			};
-		});
-	</script>
-</head>
-<body ng-controller="listaTelefonicaCtrl">
-	<div class="jumbotron">
-		<h3>{{app}}</h3>
-		<table ng-show="contatos.length > 0" class="table">
-			<tr>
-				<th></th>
-				<th>Nome</th>
-				<th>Telefone</th>
-				<th>Operadora</th>
-				<th></th>
-			</tr>
-			<tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
-				<td><input type="checkbox" ng-model="contato.selecionado"/></td>
-				<td>{{contato.nome}}</td>
-				<td>{{contato.telefone}}</td>
-				<td>{{contato.operadora.nome}}</td>
-				<td><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
-			</tr>
-		</table>
-		<hr/>
-		<input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
-		<input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
-		<select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome for operadora in operadoras">
-			<option value="">Selecione uma operadora</option>
-		</select>
-		<button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contato</button>
-		<button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-if="isContatoSelecionado(contatos)">Apagar Contatos</button>
-	</div>
-	<div ng-include="'footer.html'"></div>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>The Best Oferta</title>  
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+					<div class="navbar-header">
+						 
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+						</button> <a class="navbar-brand" href="#" id="font-menu">TheBestOferta</a>
+					</div>
+					
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background:#34495e;">
+						<ul class="nav navbar-nav">
+							<li>
+								<a href="#" id="font-menu">Anuncios</a>
+							</li>
+							<li>
+								<a href="anunciar.html" id="font-menu">Anunciar</a>
+							</li>
+							<li>
+								<a href="#" id="font-menu">Empresas</a>
+							</li>
+							<li>
+								<a href="#" id="font-menu">Contato</a>
+							</li>
+							<li>
+								<a href="login.html" id="font-menu">Login</a>
+							</li>
+						</ul>
+						<form class="navbar-form navbar-left" role="search">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Buscar">
+							</div> 
+							<button type="submit" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span> Buscar
+							</button>
+						</form>
+						
+					</div>
+					
+				</nav>
+			</div>
+		</div><br><br><br><br><br><br><br><br><br>
+		
+	    <div class="section section-info" style="margin-left:-15px; margin-right:device-width;">
+	      <div class="container" >
+	        <div class="row">
+	          <div class="col-md-8" style="color:#ecf0f1;background-color:#1A8BC8;border:2px white solid; padding:16px;">
+	            <h1>The Best Oferta</h1>
+	            <p class="lead">Se você esta a procura de ofertas em sua cidade, então veio ao lugar certo, aqui você pode encontrar ofertas de todos os tipos de estabelecimentos em sua região, ou se você possui um négocio, cadastra-se e comece a usufruir do site anunciando suas ofertas.
+	            <button type="button" class="btn btn-success btn-lg" id="btnhomecadastrar">Cadastrar</button></p>
+	          </div>
+	          <div class="col-md-1">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	          <div class="col-md-3" style="color:#ecf0f1;background-color:#1A8BC8;border:2px white solid; padding:5px;">
+	          	 <form action="verifica.php" method="post"> <center><h1>Entrar</h1></center>
+				  <br><input type="text" class="form-control" placeholder="Email" name="email">
+				  <br><input type="password" class="form-control" placeholder="Senha" name="senha">
+				 <center> <br> <button type="submit" class="btn btn-success btn-lg" >Entrar</button><br></center></form>
+	          </div>
+	        </div>
+	      </div>
+	    </div><br><br><br>
+    	<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation"style="background:#34495e;">
+					<center class="footer">The Best Oferta © 2016<p>Gustavo Vitorino - <a href="http://hu3tech.blogspot.com.br/" class="footer">Hu3Tech
+					</a></p></center>					
+				</nav>
+			</div>
+		</div>
+
+
+	</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
