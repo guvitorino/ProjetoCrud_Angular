@@ -49,6 +49,35 @@
 				}
 			};
 
+			$scope.editarUsuario = function (usuario,usuarios) {
+				$scope.usuario = usuario;		
+				$scope.bc = true;
+				$scope.bsa = true;
+				$scope.termoch = true;
+			};
+
+			$scope.atualizarUsuario = function (usuario) {
+				 $http.post("atualizarAnunciante.php", {nome:usuario.nome, empresa: usuario.empresa, email: usuario.email, senha: usuario.senha, id: usuario.id})
+				 .success(function (data) {
+					delete $scope.usuario;
+					$scope.cadaUsu.$setPristine();
+					carregarLista();
+					$scope.bc = false;
+					$scope.bsa = false;
+					$scope.termoch = false;
+				}).error(function (data) {
+					$scope.message = "Aconteceu um problema: " + data;
+				});
+			};
+
+			$scope.cancelar = function () {
+				$scope.bc = false;
+				$scope.bsa = false;
+				$scope.termoch = false;
+				delete $scope.usuario;
+				$scope.cadaUsu.$setPristine();
+			};
+
 			carregarLista();
 		});
     </script>
@@ -148,12 +177,12 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
+							<div class="checkbox" ng-show="!termoch">
 								 
 								<label>
-									<input type="checkbox" id="chtermo" ng-model="usuario.termos" ng-required="true"/> <b>Li e Concordo com os <a href="#" style="text-decoration:none; color:green;">Termos e Condições de Uso</a>!
+									<input type="checkbox" id="chtermo" ng-model="usuario.termos" ng-required="true" /> <b>Li e Concordo com os <a href="#" style="text-decoration:none; color:green;">Termos e Condições de Uso</a>!
 								</label>
-								<div style="color:#C42924;text-align: center;padding: 5px;" ng-if="!usuario.termos" class="alert alert-danger">Aceite os termos de uso!!</div>
+								<div style="color:#C42924;text-align: center;padding: 5px;"  ng-if="!usuario.termos" class="alert alert-danger">Aceite os termos de uso!!</div>
 							</div>
 						</div>
 					</div>
@@ -161,8 +190,14 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							 
-							<button type="submit" class="btn btn-default" id="btncadastra" ng-click="adicionarUsuario(usuario)" ng-disabled="cadaUsu.$invalid">
+							<button type="submit" class="btn btn-default" id="btncadastra" ng-click="adicionarUsuario(usuario)" ng-disabled="cadaUsu.$invalid" ng-show="!bc">
 								Cadastrar
+							</button>
+							<button type="submit" class="btn btn-default" id="btnatualiza" ng-click="atualizarUsuario(usuario)"  ng-show="bsa">
+								Salvar Alterações
+							</button>
+							<button type="submit" class="btn btn-default" ng-click="cancelar()"  ng-show="bsa">
+								Cancelar
 							</button>
 							
 						</div>
@@ -177,13 +212,14 @@
 							<th> Nome </th>
 							<th> Email </th>
 							<th> Excluir </th>
+							<th> Editar </th>
 						</tr>
 					</thead>
 					<tbody ng-repeat="usuario in usuarios">
 						<td>{{usuario.nome}}</td>
 						<td>{{usuario.email}}</td>
 						<td><a><span class='glyphicon glyphicon-trash' ng-click="apagarUsuario(usuario,usuarios)"></span></a></td>
-						<td><a><span class='glyphicon glyphicon-pencil' ng-click=""></span></a></td>
+						<td><a><span class='glyphicon glyphicon-pencil' ng-click="editarUsuario(usuario,usuarios)"></span></a></td>
 					</tbody>
 				</table>
 			</div>

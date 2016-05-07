@@ -10,6 +10,8 @@
 			array_push($obj, array(
 				"nome"=>$row["nome"],
 		        "email"=>$row["email"],
+		        "empresa"=>$row["empresa"],
+		        "senha"=>$row["senha"],
 		        "id"=>$row["idanunciante"]));
 		}
 	}
